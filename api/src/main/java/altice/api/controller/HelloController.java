@@ -18,11 +18,4 @@ public class HelloController {
     public String hello() {
         return "Welcome to the API! Use /labseq/{n} to calculate the nth value of the Labseq sequence.";
     }
-
-    @GetMapping("/hello")
-    @Operation(summary = "Dizer Olá", description = "Returns a welcome message")
-    @ApiResponse(responseCode = "200", description = "Operation successful")
-    public String helloWorld() {
-        return "Hello World!";
-    }
 }

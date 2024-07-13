@@ -1,19 +1,20 @@
-# Estágio de build
-FROM node:20 as build
+# Use uma imagem Node.js mais recente
+FROM node:20
 
+# Defina o diretório de trabalho no container
 WORKDIR /app
 
+# Copie os arquivos package.json e package-lock.json (se disponível)
 COPY package*.json ./
+
+# Instale as dependências do projeto
 RUN npm install
 
+# Copie os arquivos do projeto para o diretório de trabalho
 COPY . .
-RUN npm run build
 
-# Estágio de produção
-FROM nginx:stable-alpine
+# Exponha a porta que o Vite usa por padrão
+EXPOSE 5173
 
-COPY --from=build /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para rodar a aplicação em modo de desenvolvimento
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
